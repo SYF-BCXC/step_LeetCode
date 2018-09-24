@@ -7,15 +7,10 @@
 # @Email   : tangcaiyuan@hust.edu.cn
 # @Software: PyCharm
 """
-Given a string, find the length of the longest substring without repeating characters.
-
-Examples:
-
-Given "abcabcbb", the answer is "abc", which the length is 3.
-
-Given "bbbbb", the answer is "b", with the length of 1.
-
-Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+题目描述:
+https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/description/
+思路:
+从左到右扫描即可。如果最新扫描的字符，在已扫字符串中，则将他在字符串中出现的位置之前的都去除，将其加入，最后记录最长长度返回即可。
 """
 
 
@@ -31,21 +26,21 @@ class Solution:
         elif length == 1:
             return 1
         else:
-            b = 0
+            b = 0   # 当前myList的长度
             myList = [s[0]]
-            temp = 1
-            while b < (length-1):
-                if s[b+1] not in myList:
+            temp = 1    # 用来记录扫描串中最长串的长度
+            while b < (length - 1):
+                if s[b + 1] not in myList:
                     # 如果不在里面，将该元素加入list，并重新计算最大temp
                     b += 1
                     myList.append(s[b])
-                    if len(myList)>temp:
+                    if len(myList) > temp:
                         temp = len(myList)
                 else:
                     # 如果在里面，将该元素在list中位置以前的(包括该位置)都删除，将该元素加入list
-                    loc = myList.index(s[b+1])
-                    myList = myList[loc+1:]+[s[b+1]]
-                    b = b+1
+                    loc = myList.index(s[b + 1])
+                    myList = myList[loc + 1:] + [s[b + 1]]
+                    b = b + 1
             return temp
 
 

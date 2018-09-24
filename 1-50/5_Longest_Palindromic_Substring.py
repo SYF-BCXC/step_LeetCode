@@ -7,26 +7,19 @@
 # @Email   : tangcaiyuan@hust.edu.cn
 # @Software: PyCharm
 
-"""   describe of problem
-Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
-
-Example 1:
-
-Input: "babad"
-Output: "bab"
-Note: "aba" is also a valid answer.
-
-Example 2:
-
-Input: "cbbd"
-Output: "bb"
 """
-
-
+题目描述:
+https://leetcode-cn.com/problems/longest-palindromic-substring/description/
+思路:
 # 思路1：暴力。找所有字串，每个字串reverse看是否相等
-# 思路2：动态规划。找所有长度为1和2的回文串。然后扩展。
+# 思路2：动态规划。找所有长度为1和2的回文串。然后扩展。(暂时未看懂，网上找的代码，如果有看懂的，还请不吝赐教)
 # 思路3：中间扩展法。找中心位置向两边扩展，中间位置一共 2n-1 个
-# 思路4：Manacher算法。
+# 思路4：Manacher算法。(最快，时间复杂度 o(n))
+
+关于Manacher算法的补充：
+    Manacher算法的思路其实和KMP算法的思路类似，都是利用已经扫描过的对等的字符串的信息，减少匹配次数。其中最精彩的地方在于将任意长度的字符串变成奇数长度(2*N+1一定为奇数)
+    参考文献：https://www.cnblogs.com/love-yh/p/7072161.html
+"""
 
 
 class Solution:
@@ -61,7 +54,7 @@ class Solution:
         else:
             self.p[i, j] = self.dynamic_programming(s, i + 1, j - 1) and (s[i] == s[j])
 
-    # 动态规划法
+    # 动态规划法(暂时未看懂，网上找的代码，如果有看懂的，还请不吝赐教)
     def longestPalindrome2(self, s):
         str_length = len(s)
         max_length = 0
@@ -134,20 +127,8 @@ class Solution:
             if RL[i] > MaxLen:
                 MaxLen = RL[i]
                 MaxPos = i
-        return s[MaxPos - MaxLen+1: MaxPos + MaxLen-1].replace('#', '') # 去掉填充符号返回
+        return s[MaxPos - MaxLen + 1: MaxPos + MaxLen - 1].replace('#', '')  # 去掉填充符号返回
 
-
-"""
-        # 动态规划法
-        p = [[0 for i in range(5)] for i in range(5)]
-        self.dynamic_programming(s, 0, len(s) - 1)
-        max = 0
-        for i in range(len(self.p)):
-            for j in range(len(self.p[0])):
-                if self.p[i, j]:
-                    if (j - i) > max:
-                        max = j - i
-"""
 
 if __name__ == '__main__':
     str = "aaabaaaa"

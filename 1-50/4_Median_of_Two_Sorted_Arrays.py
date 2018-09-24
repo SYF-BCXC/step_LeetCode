@@ -7,21 +7,14 @@
 # @Email   : tangcaiyuan@hust.edu.cn
 # @Software: PyCharm
 
-# 题目描述:
 """
-There are two sorted arrays nums1 and nums2 of size m and n respectively.
-Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
-You may assume nums1 and nums2 cannot be both empty.
-
-Example 1:
-nums1 = [1, 3]
-nums2 = [2]
-The median is 2.0
-
-Example 2:
-nums1 = [1, 2]
-nums2 = [3, 4]
-The median is (2 + 3)/2 = 2.5
+题目描述:
+https://leetcode-cn.com/problems/median-of-two-sorted-arrays/description/
+思路:
+1、 分别得到两个List的的长度m和n，求和，找中间位置。如果是奇数，int(7/2)+1 = 4。
+    如果是偶数,8/2=4，再加上5。接下来就是找第a小的问题，分别两个指针指向两个数组的第一个位置，
+    谁更下就下标加1，且a-=1，直到a==0;
+2、 有序数组合并，直接取中间位置即可(由于两个数组都是有序的，时间复杂度并不会超。且最快解答中，居然直接使用sort()函数排序，也没有超时。排序最低也是nlogn，暂时还不清楚是为什么)
 """
 
 # 思路一的失败。主要难在数组边界的判断，以及选择第a+1号数时的难度

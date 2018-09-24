@@ -7,6 +7,12 @@
 # @Email   : tangcaiyuan@hust.edu.cn
 # @Software: PyCharm
 
+"""
+题目描述:
+https://leetcode-cn.com/problems/two-sum/description/
+思路:
+1、扫描nums数组。lookup存放扫描过的数字，目标值target - 当前扫描的数字，如果该数字在lookup中就返回这一组数，如果不在则添加到lookup数组中去。
+"""
 
 def two_sum(nums, target):
     """
