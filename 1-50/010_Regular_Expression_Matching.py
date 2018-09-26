@@ -14,10 +14,36 @@ https://leetcode-cn.com/problems/regular-expression-matching/description/
 1、先扫描字符模式p，记录 字符 和 . ，以及后面出现的是 *  . 还是直接出现多次。
     然后用一个List依次存储(如：[['a',3],['b','*'],['.'，'*'],['.',3]])。同样的，扫描字符串s，
     也用List存储(如：[['a',1],['b',2]],子元素为[出现字符，出现次数])。最后按照匹配规则进行匹配。
+2、 递归。
+
+关于循环删除List表中元素的补充：
+    删除的方法：
+    1、remove: 删除单个元素，删除首个符合条件的元素，按值删除。L.remove("2")，则是删除L中第一个值为"2"的元素
+    2、pop:删除并 返回 指定位置 元素(根据索引)。L.pop(2)，删除索引为2的元素
+    3、del:根据索引删除。del L[0:3]，删除前三个元素
+
+    for x, z in L:(L是一个List)
+    z依次遍历List中的元素，x也依次增加(哪怕你删除了一个元素，总长度减少了，x也依旧每次循环+1)
+    因此，删除后L的长度会变小，但是X会一直增加，可能会越界，也可能发生别的错误。
+
+    解决方法：
+    1、倒序删除。
+    ########### 代码 ###########
+    num_list = [1, 2, 3, 4, 5]
+    for i in range(len(num_list)-1, -1, -1):
+        if num_list[i] == 2:
+            num_list.pop(i)
+        else:
+            print(num_list[i])
+
+    2、考虑用while循环
+
+    参考文献：https://www.cnblogs.com/bananaplan/p/remove-listitem-while-iterating.html
 """
 
 
 class Solution:
+    # 方法太过直接，操作起来太复杂，同时对于最后两个List进行比较也不方便，当面对"ab"和".*"时，匹配过于麻烦
     def isMatch(self, s, p):
         """
         :type s: str
@@ -81,6 +107,8 @@ class Solution:
         for i in range(len(list_p) - 1, -1, -1):
             if i in del_loc:
                 list_p.pop(i)
+        # list_s = [['a', 4], ['d', 2], ['b', 2], ['d', 1], ['c', 2]]
+        # list_p = [['a', 0, '>='], ['d', 0, '>='], ['b', 0, '>='], ['d', 1, ' '], ['c', 0, '>=']]
         # 下面就是匹配处理，将list_s 中每个子对拿出来，进行匹配消除，匹配成功则进入下一个子对
         # 直到所有子对都匹配完成，则返回True；否则返回False
         # 匹配规则，如果是相同元素，则将出现次数相减
@@ -112,5 +140,28 @@ class Solution:
         else:
             return True
 
+    # 方法二：用递归
+    def isMatch2(self, s, p):
+        # p 为空的时候，s 如果为空则返回True，不为空则返回False
+        if not p:
+            return not s
+        # p中只有一个字符，或者当前这个字符没有伸展能力
+        if len(p) == 1 or p[1] != '*':
+            if len(s) > 0 and (p[0] == s[0] or p[0] == '.'):
+                return self.isMatch2(s[1:], p[1:])
+            else:
+                return False
+        else:
+            # len(p)!= 1 and p[1] == '*'
+            # 当前这个字符具有伸展性
+            # s 并未匹配完成，并且当前这个字符能匹配上
+            while len(s) > 0 and (p[0] == s[0] or p[0] == '.'):
+                # 处理 "c*" 这种，但是 c 并未在 s 中出现
+                if self.isMatch2(s, p[2:]):
+                    return True
+                s = s[1:]
+            return self.isMatch2(s, p[2:])
+
+
 if __name__ == '__main__':
-    print(Solution().isMatch("ab", ".*"))
+    print(Solution().isMatch2("mississippi", "mis*is*p*."))
