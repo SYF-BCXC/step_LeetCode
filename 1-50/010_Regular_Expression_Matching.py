@@ -140,7 +140,7 @@ class Solution:
         else:
             return True
 
-    # 方法二：用递归
+    # 方法二：用递归，此方法速度较慢，速度前90%
     def isMatch2(self, s, p):
         # p 为空的时候，s 如果为空则返回True，不为空则返回False
         if not p:
@@ -162,6 +162,64 @@ class Solution:
                 s = s[1:]
             return self.isMatch2(s, p[2:])
 
+    # 方法三：动态规划，此方法速度较快，用时76ms，速度前5%
+    def isMatch3(self, s, p):
+        if not s and not p:
+            return True
+        if not p:
+            return False
+        m, n = len(s), len(p)
+        d = [[False for i in range(n + 1)] for j in range(m + 1)]
+        # d[i][j]表示s[:i]与p[:j]是否匹配
+        d[0][0] = True
+        for k in range(2, n + 1, 2):
+            if p[k - 1] == '*':
+                d[0][k] = True
+            else:
+                break
+        if m == 0:
+            return d[m][n]
+        if s[0] == p[0] or p[0] == '.':
+            d[1][1] = True
+        if n == 1:
+            return d[m][n]
+        for i in range(1, m + 1):
+            for j in range(2, n + 1):
+                x, y, z = s[i - 1], p[j - 1], p[j - 2]
+                if x == y or y == '.':
+                    d[i][j] = d[i - 1][j - 1]
+                else:
+                    if y != '*':
+                        d[i][j] = False
+                    else:
+                        if x == z or z == '.':
+                            if d[i][j - 2]:
+                                d[i][j] = True
+                            else:
+                                d[i][j] = d[i - 1][j]
+                        else:
+                            d[i][j] = d[i][j - 2]
+        return d[m][n]
+
+    # 同为方法三，但是他的答案更精简，值得研究
+    def isMatch3_2(self, s, p):
+        dp = [[False for i in range(len(p) + 1)] for j in range(len(s) + 1)]
+        dp[0][0] = True
+        for i in range(1, len(p) + 1):
+            if p[i - 1] == '*':
+                if i >= 2:
+                    dp[0][i] = dp[0][i - 2]
+        for i in range(1, len(s) + 1):
+            for j in range(1, len(p) + 1):
+                if p[j - 1] == '.':
+                    dp[i][j] = dp[i - 1][j - 1]
+                elif p[j - 1] == '*':
+                    dp[i][j] = dp[i][j - 1] or dp[i][j - 2] or (
+                                dp[i - 1][j] and (s[i - 1] == p[j - 2] or p[j - 2] == '.'))
+                else:
+                    dp[i][j] = dp[i - 1][j - 1] and s[i - 1] == p[j - 1]
+        return dp[len(s)][len(p)]
+
 
 if __name__ == '__main__':
-    print(Solution().isMatch2("mississippi", "mis*is*p*."))
+    print(Solution().isMatch3("", ".*"))
