@@ -215,10 +215,30 @@ class Solution:
                     dp[i][j] = dp[i - 1][j - 1]
                 elif p[j - 1] == '*':
                     dp[i][j] = dp[i][j - 1] or dp[i][j - 2] or (
-                                dp[i - 1][j] and (s[i - 1] == p[j - 2] or p[j - 2] == '.'))
+                            dp[i - 1][j] and (s[i - 1] == p[j - 2] or p[j - 2] == '.'))
                 else:
                     dp[i][j] = dp[i - 1][j - 1] and s[i - 1] == p[j - 1]
         return dp[len(s)][len(p)]
+
+    # 最快解法
+    def isMatch4(self, s, p):
+        memo = {}
+
+        def dp(i, j):
+            if (i, j) not in memo:
+                if j == len(p):
+                    ans = i == len(s)
+                else:
+                    first_match = i < len(s) and p[j] in {s[i], '.'}
+                    if j + 1 < len(p) and p[j + 1] == '*':
+                        ans = dp(i, j + 2) or first_match and dp(i + 1, j)
+                    else:
+                        ans = first_match and dp(i + 1, j + 1)
+
+                memo[i, j] = ans
+            return memo[i, j]
+
+        return dp(0, 0)
 
 
 if __name__ == '__main__':
