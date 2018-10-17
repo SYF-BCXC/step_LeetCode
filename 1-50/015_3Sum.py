@@ -131,55 +131,55 @@ class Solution:
         return rtn
 
         # 思路3
-        def threeSum3(self, nums):
-            """
-            :param nums:List[int]
-            :return: List[List[int]]
-            """
-            nums.sort()
-            n, res = len(nums), []
-            for i in range(n):
-                if i > 0 and nums[i] == nums[i - 1]:
-                    continue
-                l, r = i + 1, n - 1
-                while l < r:
-                    temp = nums[i] + nums[l] + nums[r]
-                    if temp == 0:
-                        res.append([nums[i], nums[l], nums[r]])
-                        l, r = l + 1, r - 1
-                        # 为了避免[-3,1,1,2,2]的情况下[-3,1,2]会出现两次
-                        while l < r and nums[l] == nums[l - 1]:
-                            l = l + 1
-                        while l < r and nums[r] == nums[r + 1]:
-                            r = r - 1
-                    elif temp > 0:
-                        r = r - 1
-                    else:
+    def threeSum3(self, nums):
+        """
+        :param nums:List[int]
+        :return: List[List[int]]
+        """
+        nums.sort()
+        n, res = len(nums), []
+        for i in range(n):
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            l, r = i + 1, n - 1
+            while l < r:
+                temp = nums[i] + nums[l] + nums[r]
+                if temp == 0:
+                    res.append([nums[i], nums[l], nums[r]])
+                    l, r = l + 1, r - 1
+                    # 为了避免[-3,1,1,2,2]的情况下[-3,1,2]会出现两次
+                    while l < r and nums[l] == nums[l - 1]:
                         l = l + 1
-            return res
+                    while l < r and nums[r] == nums[r + 1]:
+                        r = r - 1
+                elif temp > 0:
+                    r = r - 1
+                else:
+                    l = l + 1
+        return res
 
-        # 最快解法。思路4
-        def threeSum4(self, nums):
-            tmp = dict()
-            for i in range(len(nums)):
-                tmp[nums[i]] = tmp.get(nums[i], 0) + 1  # 完成计数功能，本质上感觉等价于Counter(nums)。
-                # 但是此处temp是字典，而Counter返回的是Counter对象(虽然也是继承于dict类)
-            left = sorted(filter(lambda x: x < 0, tmp))  # temp中所有小于0的值
-            right = sorted(filter(lambda x: x >= 0, tmp))  # temp中所有大于等于0的值
-            if 0 in tmp and tmp[0] > 2:  # 如果nums中存在3个以上的0，则将[0,0,0]添加到结果中去
-                res = [[0, 0, 0]]
-            else:
-                res = []
-            for i in left:
-                for j in right:
-                    mid = -i - j
-                    if mid in tmp:
-                        if mid in (i, j) and tmp[
-                            mid] > 1:  # i+j+i=0 or i+j+j=0.若mid正好就是i和j中的一个，要看看nums数组中，mid出现的次数是否有两次及以上，否则不成立
-                            res.append([i, mid, j])
-                        elif mid < i or mid > j:  # i,j,mid互不相同
-                            res.append([i, mid, j])
-            return res
+    # 最快解法。思路4
+    def threeSum4(self, nums):
+        tmp = dict()
+        for i in range(len(nums)):
+            tmp[nums[i]] = tmp.get(nums[i], 0) + 1  # 完成计数功能，本质上感觉等价于Counter(nums)。
+            # 但是此处temp是字典，而Counter返回的是Counter对象(虽然也是继承于dict类)
+        left = sorted(filter(lambda x: x < 0, tmp))  # temp中所有小于0的值
+        right = sorted(filter(lambda x: x >= 0, tmp))  # temp中所有大于等于0的值
+        if 0 in tmp and tmp[0] > 2:  # 如果nums中存在3个以上的0，则将[0,0,0]添加到结果中去
+            res = [[0, 0, 0]]
+        else:
+            res = []
+        for i in left:
+            for j in right:
+                mid = -i - j
+                if mid in tmp:
+                    if mid in (i, j) and tmp[
+                        mid] > 1:  # i+j+i=0 or i+j+j=0.若mid正好就是i和j中的一个，要看看nums数组中，mid出现的次数是否有两次及以上，否则不成立
+                        res.append([i, mid, j])
+                    elif mid < i or mid > j:  # i,j,mid互不相同
+                        res.append([i, mid, j])
+        return res
 
 
 if __name__ == '__main__':
