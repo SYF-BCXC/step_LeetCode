@@ -1,6 +1,5 @@
 #include <iostream>
 using namespace std;
-
 // 格式化代码。先全选代码ctrl + A, 然后ctrl + K + F
 // ctrl+k+c 和 ctrl+k+u
 //int main()
