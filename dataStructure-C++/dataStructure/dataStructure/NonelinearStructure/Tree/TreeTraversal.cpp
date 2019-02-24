@@ -1,5 +1,7 @@
 # include <iostream>
 using namespace std;
+# include <stack>
+#include<queue>
 
 struct TreeNode
 {
@@ -52,7 +54,32 @@ void afterorder(TreeNode* t)
 	cout << t->val << " ";
 }
 
-/*
+// 层序遍历
+void levelTraversal(TreeNode* t) {
+	// 需要用到队列
+	queue<TreeNode*> que;
+	que.push(t);
+	while (!que.empty())
+	{
+		// 访问当前节点
+		TreeNode* tmp = que.front();
+		cout<<tmp->val<<" ";
+		// push左节点和右节点
+		if (tmp->left)
+		{
+			que.push(tmp->left);
+		}
+		if (tmp->right)
+		{
+			que.push(tmp->right);
+		}
+		// pop()
+		que.pop();
+	}
+
+}
+
+
 int main() {
 	//
 	//		1
@@ -82,7 +109,10 @@ int main() {
 	inorder(&root);
 	cout << "\r\n后序遍历:";
 	afterorder(&root);
+	cout << "\r\n层序遍历:";
+	levelTraversal(&root);
+
+
 	system("pause");
 	return 0;
 }
-*/
