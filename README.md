@@ -14,7 +14,9 @@ TCY
 
 
 ### container容器
+std::queue 若在线平台不让加头文件，用这种方法弥补
 #### vector向量
+vector实质上是数组。
 ```
 #include <vector>
 #include <iostream>
@@ -63,10 +65,85 @@ int main()
  
 	test.empty(); //test是否为空
 ```
+- vector和list的区别：  
+vector:  
+1. 本质为数组。可以随机访问
+2. 可以在最后进行push_back()和pop_back()但是不能在头进行这种操作。
+3. 内部插入效率低  
+list:  
+1. 本质为双向链表。方便插入删除。
+2. 不支持随机访问。但是可以任意插入删除。
+3. 占用内存多
 #### list列表
+list链表就是一个双向链表，可以高效插入删除元素。但不支持随机访问。
+```
+#include<list>
+list<int> li;// 初始化
+front();  // 第一个元素的引用
+back(); // 返回最后一个元素的引用
+reverse();  // 反转链表
+push_back(); 
+push_front();
+pop_front();
+pop_back();
+```
 #### set集合
+逻辑本质是数学上的集合(每个元素至多出现一次)，并且set中元素已经从小到大排好序
+```
+#include<set>
+begin()     　　 返回set容器的第一个元素的地址
+
+end() 　　　　 返回set容器的最后一个元素地址
+
+clear()   　　     删除set容器中的所有的元素
+
+empty() 　　　 判断set容器是否为空
+
+max_size() 　   返回set容器可能包含的元素最大个数
+
+size() 　　　　 返回当前set容器中的元素个数
+
+erase(it)             删除迭代器指针it处元素
+
+遍历访问
+for (set<int>::iterator it = s.begin(); != s.end(); ++it)    
+{
+    cout << *it << endl;
+}
+
+如果存struct，必须在struct内重载'<'运算符
+struct info{
+    string name;
+    double score;
+    bool operator < (const Info &a) const{
+        // set中按照score由大到小排序
+        return a.score < score;
+    }
+}
+```
 #### stack栈
+```
+#include<stack>
+stack<int> st;//定义
+push();  //放入元素
+pop();  //移除栈顶元素，无返回值
+top(); //返回栈顶元素
+size();  //栈的长度
+empty();  //是否为空
+```
 #### queue队列
+```
+#include<queue>
+queue<int> que;// 定义
+push();
+pop();  //无返回值！
+front();    // 返回第一个元素
+back();  // 返回最后一个元素
+size();
+empty();
+```
+
+
 #### priority_queue优先队列
 #### map映射
 #### multimap多重映射
@@ -74,7 +151,7 @@ int main()
 #### multiset多重集合
 
 ### iterator迭代器
-
+参考容器中的遍历。
 # 线性结构
 ## 数组
 
@@ -92,191 +169,67 @@ struct TreeNode {
  TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 ### 遍历：
-#### 问题：最大路径和
-```
-static const auto _ = []()
-{
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    return nullptr;
-}();
+[对应源码](https://github.com/WhoseDangerousSmile/step_LeetCode/blob/master/dataStructure-C%2B%2B/dataStructure/dataStructure/NonelinearStructure/Tree/TreeTraversal.cpp)
 
-class Solution {
-public:
- int res = INT_MIN;
- int maxPath(TreeNode* root) {
-    // 边界判断
-	 if (root == NULL)
-		 return 0;
-	// 遍历
-	 int left_max = maxPath(root->left);
-	 int right_max = maxPath(root->right);
-	// 小于零则为0
-	 left_max = left_max > 0 ? left_max : 0;
-	 right_max = right_max > 0 ? right_max : 0;
-	 // 计算和
-	 int sum = left_max + right_max + root->val;
-	 // 
-	 res = max(res, sum);
-	 return left_max > right_max ? (left_max+root->val) : (right_max+root->val);
- }
- int maxPathSum(TreeNode* root) {
-	 maxPath(root);
-	 return res;
- }
-};
-```
-#### 问题：输出所有路径，路径的和为指定值
-```
-问题：(leetcode 113)Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
-// t:当前节点  sum: 目标值  path:当前路径  presum:当前和  result:所有结果路径
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-class Solution {
-public:
-    vector<vector<int>> result;
-    vector<int> path;
-    int presum;
-    
-    void findPath(TreeNode* t,int &sum, vector<int> &path, int &presum, vector<vector<int>> &result){
-        // 边界判断
-        if(!t){
-            return;
-        }
-        
-        // 入栈
-        path.push_back(t->val);
-        presum += t->val;
-        
-        // 判断是否满足输出条件
-        if (presum == sum && !t->left && !t->right){
-            result.push_back(path);
-        }
-        
-        // 遍历
-        findPath(t->left,sum,path,presum,result);
-        findPath(t->right,sum,path,presum,result);
-        
-        // 出栈
-        presum -= t->val;
-        path.pop_back();
-    }
-    
-    vector<vector<int>> pathSum(TreeNode* root, int sum) {
-        this->presum = 0;
-        findPath(root,sum,this->path,this->presum,this->result);
-        return result;
-    }
-};
-```
-#### 中序遍历的下一个节点
-```
-# include <iostream>
-using namespace std;
+#### (leetcode 113)最大路径和
+[对应源码](https://github.com/WhoseDangerousSmile/step_LeetCode/blob/master/dataStructure-C%2B%2B/dataStructure/dataStructure/NonelinearStructure/Tree/(113)TreePathSum.cpp)
 
-struct TreeNode
-{
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode *father;
-	// 写法1.初始化，效率高
-	TreeNode(int x) : val(x), left(NULL), right(NULL), father(NULL) { }
-	// 写法2.赋值，效率差
-	// TreeNode(int x){val=x;left=NULL;right=NULL;}
-};
+#### (剑指offer)中序遍历的下一个节点
+[对应源码](https://github.com/WhoseDangerousSmile/step_LeetCode/blob/master/dataStructure-C%2B%2B/dataStructure/dataStructure/NonelinearStructure/Tree/TreeInorderNext.cpp)
 
-/*
-给一个节点，求其中序的下一个节点的值，如果无下一节点则返回-1.
-*/
-int inorderNext(TreeNode* t) {
-	// 边界
+#### (leetcode 236)最近公共祖先
+[对应源码](https://github.com/WhoseDangerousSmile/step_LeetCode/blob/master/dataStructure-C%2B%2B/dataStructure/dataStructure/NonelinearStructure/Tree/(236)TreeLowestCommonAncestor.cpp)
 
-	// 有右节点。访问右子树最左节点
-	TreeNode* cur_tree = t->right;
-	if (cur_tree) {
-		cur_tree = cur_tree->left;
-		while (!cur_tree->right &&!cur_tree->left)
-		{
-			return cur_tree->val;
-		}
-	}
-	// 无右节点。递归访问父节点，直到为父节点的左节点，或者父节点为NULL
-	else
-	{
-		cur_tree = t;
-		while (cur_tree->father)
-		{
-			if (cur_tree == cur_tree->father->left)
-			{
-				return cur_tree->father->val;
-			}
-			else
-			{
-				cur_tree = cur_tree->father;
-			}
-		}
-		return -1;
-	}
-}
+#### (leetcode 114)二叉树展平为链表
+[对应源码](https://github.com/WhoseDangerousSmile/step_LeetCode/blob/master/dataStructure-C%2B%2B/dataStructure/dataStructure/NonelinearStructure/Tree/(114)FlattenBinaryTree.cpp)
+#### (leetcode 199)从右侧观察二叉树
+[对应源码](https://github.com/WhoseDangerousSmile/step_LeetCode/blob/master/dataStructure-C%2B%2B/dataStructure/dataStructure/NonelinearStructure/Tree/(199)TreeRightSideView.cpp)
 
-/*
-int main() {
-	//
-	//		1
-	//	 2		 3
-	// 4	   5      6
-	//	7           8
-	//
-	TreeNode root(1);
-	TreeNode layer_1_1(2);
-	TreeNode layer_1_2(3);
-	TreeNode layer_2_1(4);
-	TreeNode layer_2_2(5);
-	TreeNode layer_2_3(6);
-	TreeNode layer_3_1(7);
-	TreeNode layer_3_2(8);
-	root.left = &layer_1_1;
-	root.right = &layer_1_2;
-	layer_1_1.left = &layer_2_1;
-	layer_1_1.father = &root;
-	layer_1_2.left = &layer_2_2;
-	layer_1_2.right = &layer_2_3;
-	layer_1_2.father = &root;
-	layer_2_1.right = &layer_3_1;
-	layer_2_1.father = &layer_1_1;
-	layer_2_2.father = &layer_1_2;
-	layer_2_3.father = &layer_1_2;
-	layer_2_3.left = &layer_3_2;
-	layer_3_1.father = &layer_2_1;
-	layer_3_2.father = &layer_2_3;
-	cout << inorderNext(&root);
-	system("pause");
-	return 0;
-}
-*/
-```
+
 ## 图
+顶点+边 = 图；
 ### 存储
-### 最小生成树
-### 最短单元路径
-### AOE网络与关键路径
+邻接矩阵
+```
+有边为1(带权则为权值)，无边为0.
+const int MAX_NODE = 5; //顶点数
+int Graph[MAX_NODE][MAX_NODE] = {0}; //边
+
+```
+邻接表
+```
+struct GraphNode{
+    int val;
+    vector<GraphNode*> neighbours;
+    GraphNode(int x):val(x){};
+}
+const int MAX_NODE = 5; //顶点数
+GraphNode* graph[MAX_NODE]; 
+for(int i=0;i<MAX_NODE;i++){
+    graph[i] = new GraphNode(i);
+}
+// 添加边
+graph[0]->neighbours.push_back(graph[3]);
+... ...
+```
 ### 广度搜索与深度搜索
 
-# 查找
+### 最小生成树
 
-# 排序
+### 最短单元路径
 
-# 搜索
+### AOE网络与关键路径
 
-# 递归与动态规划
 
-# 分治
+# 算法
+## 排序
+
+## 贪心算法
+
+## 搜索算法
+
+## 递归、回溯与分治
+
+## 动态规划
+
 

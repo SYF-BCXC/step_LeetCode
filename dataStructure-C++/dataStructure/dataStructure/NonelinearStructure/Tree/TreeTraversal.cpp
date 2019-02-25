@@ -79,7 +79,7 @@ void levelTraversal(TreeNode* t) {
 
 }
 
-
+/*
 int main() {
 	//
 	//		1
@@ -116,3 +116,4 @@ int main() {
 	system("pause");
 	return 0;
 }
+*/
