@@ -11,3 +11,5 @@ dataStructure-C++/dataStructure/.vs/
 dataStructure-C++/dataStructure/dataStructure/dataStructure.vcxproj
 dataStructure-C++/dataStructure/dataStructure/dataStructure.vcxproj.filters
 dataStructure-C++/dataStructure/dataStructure/dataStructure.vcxproj.user
+dataStructure-C++/.vscode/launch.json
+dataStructure-C++/.vscode/tasks.json

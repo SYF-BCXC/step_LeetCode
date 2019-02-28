@@ -1,26 +1,28 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
-#include<vector>
+#include <vector>
 
 struct GraphNode
 {
 	int val;
-	vector<GraphNode*> neighbours;
-	GraphNode(int x) :val(x) {}
+	vector<GraphNode *> neighbours;
+	GraphNode(int x) : val(x) {}
 };
-
-int main() {
-	/*
-		Graph:
-		Label(0):2 4
-		Label(1):0 2
-		Label(2):3
-		Label(3):4
-		Label(4):3
-	*/
+/*
+int main()
+{
+	//
+	//	Graph:
+	//	Label(0):2 4
+	//	Label(1):0 2
+	//	Label(2):3
+	//	Label(3):4
+	//	Label(4):3
+	//
 	const int MAX_N = 5;
-	GraphNode* graph[MAX_N];
-	for (int i = 0; i < MAX_N; i++) {
+	GraphNode *graph[MAX_N];
+	for (int i = 0; i < MAX_N; i++)
+	{
 		graph[i] = new GraphNode(i);
 	}
 	graph[0]->neighbours.push_back(graph[2]);
@@ -34,7 +36,8 @@ int main() {
 	for (int i = 0; i < MAX_N; i++)
 	{
 		printf("Label(%d):", i);
-		for (int j = 0; j < graph[i]->neighbours.size(); j++) {
+		for (int j = 0; j < graph[i]->neighbours.size(); j++)
+		{
 			printf("%d ", graph[i]->neighbours[j]->val);
 		}
 		printf("\n");
@@ -47,3 +50,4 @@ int main() {
 	system("pause");
 	return 0;
 }
+*/
