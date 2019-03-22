@@ -14,57 +14,57 @@ struct TreeNode
 
 void preorder(TreeNode* t)
 {
-	// ±ß½ç
+	// è¾¹ç•Œ
 	if (!t) {
 		return;
 	}
-	// ·ÃÎÊµ±Ç°½Úµã
+	// è®¿é—®å½“å‰èŠ‚ç‚¹
 	cout << t->val << " ";
-	// µİ¹é·ÃÎÊ×ó×ÓÊ÷
+	// é€’å½’è®¿é—®å·¦å­æ ‘
 	preorder(t->left);
-	// µİ¹é·ÃÎÊÓÒ×ÓÊ÷
+	// é€’å½’è®¿é—®å³å­æ ‘
 	preorder(t->right);
 }
 
 void inorder(TreeNode* t)
 {
-	// ±ß½ç
+	// è¾¹ç•Œ
 	if (!t) {
 		return;
 	}
-	// µİ¹é·ÃÎÊ×ó×ÓÊ÷
+	// é€’å½’è®¿é—®å·¦å­æ ‘
 	inorder(t->left);
-	// ·ÃÎÊµ±Ç°½Úµã
+	// è®¿é—®å½“å‰èŠ‚ç‚¹
 	cout << t->val << " ";
-	// µİ¹é·ÃÎÊÓÒ×ÓÊ÷
+	// é€’å½’è®¿é—®å³å­æ ‘
 	inorder(t->right);
 }
 
 void afterorder(TreeNode* t)
 {
-	// ±ß½ç
+	// è¾¹ç•Œ
 	if (!t) {
 		return;
 	}
-	// µİ¹é·ÃÎÊ×ó×ÓÊ÷
+	// é€’å½’è®¿é—®å·¦å­æ ‘
 	afterorder(t->left);
-	// µİ¹é·ÃÎÊÓÒ×ÓÊ÷
+	// é€’å½’è®¿é—®å³å­æ ‘
 	afterorder(t->right);
-	// ·ÃÎÊµ±Ç°½Úµã
+	// è®¿é—®å½“å‰èŠ‚ç‚¹
 	cout << t->val << " ";
 }
 
-// ²ãĞò±éÀú
+// å±‚åºéå†
 void levelTraversal(TreeNode* t) {
-	// ĞèÒªÓÃµ½¶ÓÁĞ
+	// éœ€è¦ç”¨åˆ°é˜Ÿåˆ—
 	queue<TreeNode*> que;
 	que.push(t);
 	while (!que.empty())
 	{
-		// ·ÃÎÊµ±Ç°½Úµã
+		// è®¿é—®å½“å‰èŠ‚ç‚¹
 		TreeNode* tmp = que.front();
 		cout<<tmp->val<<" ";
-		// push×ó½ÚµãºÍÓÒ½Úµã
+		// pushå·¦èŠ‚ç‚¹å’Œå³èŠ‚ç‚¹
 		if (tmp->left)
 		{
 			que.push(tmp->left);
@@ -87,7 +87,7 @@ int main() {
 	// 4	   5      6
 	//	7           8
 	//
-	// Ê÷µÄ¹¹ÔìÈç¹ûĞ´³Éº¯Êı£¬¾¡¹ÜÒıÓÃµ÷ÓÃroot£¬µ«ÊÇrootËùÖ¸ÄÚÈİ»¹ÊÇ»áÓĞ´í£¬ÇÒ²»ÊÇnullptr¡£
+	// æ ‘çš„æ„é€ å¦‚æœå†™æˆå‡½æ•°ï¼Œå°½ç®¡å¼•ç”¨è°ƒç”¨rootï¼Œä½†æ˜¯rootæ‰€æŒ‡å†…å®¹è¿˜æ˜¯ä¼šæœ‰é”™ï¼Œä¸”ä¸æ˜¯nullptrã€‚
 	TreeNode root(1);
 	TreeNode layer_1_1(2);
 	TreeNode layer_1_2(3);
@@ -103,13 +103,13 @@ int main() {
 	layer_1_2.right = &layer_2_3;
 	layer_2_1.right = &layer_3_1;
 	layer_2_3.left = &layer_3_2;
-	cout << "ÏÈĞò±éÀú:";
+	cout << "å…ˆåºéå†:";
 	preorder(&root);
-	cout << "\r\nÖĞĞò±éÀú:";
+	cout << "\r\nä¸­åºéå†:";
 	inorder(&root);
-	cout << "\r\nºóĞò±éÀú:";
+	cout << "\r\nååºéå†:";
 	afterorder(&root);
-	cout << "\r\n²ãĞò±éÀú:";
+	cout << "\r\nå±‚åºéå†:";
 	levelTraversal(&root);
 
 

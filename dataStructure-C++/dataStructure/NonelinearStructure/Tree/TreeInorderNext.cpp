@@ -7,19 +7,19 @@ struct TreeNode
 	TreeNode *left;
 	TreeNode *right;
 	TreeNode *father;
-	// д��1.��ʼ����Ч�ʸ�
+	// 写法1.初始化，效率高
 	TreeNode(int x) : val(x), left(NULL), right(NULL), father(NULL) { }
-	// д��2.��ֵ��Ч�ʲ�
+	// 写法2.赋值，效率差
 	// TreeNode(int x){val=x;left=NULL;right=NULL;}
 };
 
 /*
-��һ���ڵ㣬�����������һ���ڵ��ֵ���������һ�ڵ��򷵻�-1.
+给一个节点，求其中序的下一个节点的值，如果无下一节点则返回-1.
 */
 int inorderNext(TreeNode* t) {
-	// �߽�
+	// 边界
 
-	// ���ҽڵ㡣��������������ڵ�
+	// 有右节点。访问右子树最左节点
 	TreeNode* cur_tree = t->right;
 	if (cur_tree) {
 		cur_tree = cur_tree->left;
@@ -28,7 +28,7 @@ int inorderNext(TreeNode* t) {
 			return cur_tree->val;
 		}
 	}
-	// ���ҽڵ㡣�ݹ���ʸ��ڵ㣬ֱ��Ϊ���ڵ����ڵ㣬���߸��ڵ�ΪNULL
+		// 无右节点。递归访问父节点，直到为父节点的左节点，或者父节点为NULL
 	else
 	{
 		cur_tree = t;

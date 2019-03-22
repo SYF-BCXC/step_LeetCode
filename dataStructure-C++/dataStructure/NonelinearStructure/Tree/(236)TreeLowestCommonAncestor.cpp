@@ -13,25 +13,25 @@ struct TreeNode
 
 class Solution {
 public:
-	// ÕÒµ½pµÄÂ·¾¶£¬²¢±£´æµ½findPathÖĞ
+	// æ‰¾åˆ°pçš„è·¯å¾„ï¼Œå¹¶ä¿å­˜åˆ°findPathä¸­
 	void find(TreeNode* root, TreeNode* p, vector<TreeNode*> &path, vector<TreeNode*> &result, int &flag) {
-		// ±ß½ç
+		// è¾¹ç•Œ
 		if (!root || flag) {
 			return;
 		}
 
-		// ÈëÕ».ÅĞ¶ÏÊÇ·ñÕÒµ½¡£
+		// å…¥æ ˆ.åˆ¤æ–­æ˜¯å¦æ‰¾åˆ°ã€‚
 		path.push_back(root);
 		if (root == p) {
 			result = path;
 			flag = 1;
 		}
 
-		// ËÑË÷
+		// æœç´¢
 		find(root->left, p, path, result, flag);
 		find(root->right, p, path, result, flag);
 
-		// ³öÕ»
+		// å‡ºæ ˆ
 		path.pop_back();
 
 	}

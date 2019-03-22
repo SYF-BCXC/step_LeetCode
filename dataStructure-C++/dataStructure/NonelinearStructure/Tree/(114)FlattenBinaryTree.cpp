@@ -2,17 +2,17 @@
 using namespace std;
 
 struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
 class Solution {
 public:
-	// µİ¹é¡£Íê³ÉÕ¹¿ª²Ù×÷£¬²¢·µ»ØÕ¹¿ª×ÓÊ÷µÄ×îºóÒ»¸ö½Úµã
+	// é€’å½’ã€‚å®Œæˆå±•å¼€æ“ä½œï¼Œå¹¶è¿”å›å±•å¼€å­æ ‘çš„æœ€åä¸€ä¸ªèŠ‚ç‚¹
 	TreeNode* core(TreeNode* cur) {
-		// ±ß½ç
+		// è¾¹ç•Œ
 		if (!cur)
 		{
 			return NULL;
@@ -21,17 +21,17 @@ public:
 			return cur;
 		}
 		if (!cur->left) {
-			//Èç¹û×ó×ÓÊ÷Îª¿Õ£¬Ö±½Óµİ¹éÓÒ×ÓÊ÷
+			//å¦‚æœå·¦å­æ ‘ä¸ºç©ºï¼Œç›´æ¥é€’å½’å³å­æ ‘
 			return core(cur->right);
 		}
 		else {
-			//×ó×ÓÊ÷²»Îª¿Õ¡£½«×ó×ÓÊ÷µÄ¸ù¹Òµ½ÓÒ£¬Í¬Ê±±£´æÓÒ
+			//å·¦å­æ ‘ä¸ä¸ºç©ºã€‚å°†å·¦å­æ ‘çš„æ ¹æŒ‚åˆ°å³ï¼ŒåŒæ—¶ä¿å­˜å³
 			TreeNode* right = cur->right;
 			cur->right = cur->left;
 			cur->left = NULL;
-			// µİ¹é
+			// é€’å½’
 			TreeNode* left_tail = core(cur->right);
-			// °ÑÓÒ±ßµİ¹é½á¹û¹ÒÔÚ×ó±ß
+			// æŠŠå³è¾¹é€’å½’ç»“æœæŒ‚åœ¨å·¦è¾¹
 			left_tail->right = right;
 			return core(cur->right);
 		}
@@ -42,7 +42,7 @@ public:
 	}
 };
 
-//	×î¿ì½â´ğ,µ«ÊÇºÃÏñË¼Â·ÊÇÒ»ÑùµÄ
+//	æœ€å¿«è§£ç­”,ä½†æ˜¯å¥½åƒæ€è·¯æ˜¯ä¸€æ ·çš„
 //	static const void* ___ = []() {
 //		ios::sync_with_stdio(false);
 //		cin.tie(nullptr);

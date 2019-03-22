@@ -10,16 +10,16 @@ struct GraphNode
 	GraphNode(int x) : val(x) {}
 };
 
-// ����ͼ��һ���㣬�����ܷ��ʵ������нڵ�
+// 给定图中一个点，遍历能访问到的所有节点
 void BFS_graph(GraphNode *node, int visit[])
 {
-	// ������ȣ��ȷ����ܷ��ʵ����е㣬�����η�����Щ���ܷ��ʵ�������
+	// 广度优先，先访问能访问的所有点，再依次访问这些点能访问的其他点
 	queue<GraphNode *> q;
 	q.push(node);
 	vector<int> result;
-	// ���в�Ϊ�գ��鿴�Ƿ��Ѿ����ʣ�δ���ʣ������ӵ�result��
+	// 队列不为空，查看是否已经访问，未访问，则添加到result。
 
-	// ����result����ӡ���
+	// 访问result，打印结果
 }
 
 void DFS_graph()
@@ -49,7 +49,7 @@ int main()
 	graph[2]->neighbours.push_back(graph[3]);
 	graph[3]->neighbours.push_back(graph[4]);
 	graph[4]->neighbours.push_back(graph[3]);
-	// ��ӡͼ�Ľṹ
+	// 打印图的结构
 	printf("Graph:\n");
 	for (int i = 0; i < MAX_N; i++)
 	{
@@ -60,13 +60,13 @@ int main()
 		}
 		printf("\n");
 	}
-	// �������
-	cout << "�������:\n";
+	// 深度优先
+	cout << "深度优先:\n";
 
-	// �������
-	cout << "�������:\n";
+	// 广度优先
+	cout << "广度优先:\n";
 
-	// �ͷ��ڴ�
+	// 释放内存
 	for (int i = 0; i < MAX_N; i++)
 	{
 		delete graph[i];

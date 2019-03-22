@@ -3,7 +3,7 @@ using namespace std;
 #include<vector>
 bool searchMatrix(vector<vector<int>>& matrix, int target)
 {
-    // ´ÓÓÒÍù×ó£¬ÏÈÈ¥µô¶àÓàÁĞ
+    // ä»å³å¾€å·¦ï¼Œå…ˆå»æ‰å¤šä½™åˆ—
     int row = matrix.size();
     if(row==0)
     {
@@ -20,10 +20,10 @@ bool searchMatrix(vector<vector<int>>& matrix, int target)
     {
         cur_column--;
     }
-    // ÔÚ×ó°ë²¿·ÖÑ­»·ÕÒ
+    // åœ¨å·¦åŠéƒ¨åˆ†å¾ªç¯æ‰¾
     while(cur_row<row && cur_column >= 0 && cur_row>=0 && cur_column<column)
     {
-        // ÔÙ´ÓÉÏµ½ÏÂÕÒµ½µÚÒ»¸ö´óÓÚtargetµÄÖµ£¬Èç¹ûÕıºÃÕÒµ½ÁËÔòÖ±½Ó·µ»Ø
+        // å†ä»ä¸Šåˆ°ä¸‹æ‰¾åˆ°ç¬¬ä¸€ä¸ªå¤§äºtargetçš„å€¼ï¼Œå¦‚æœæ­£å¥½æ‰¾åˆ°äº†åˆ™ç›´æ¥è¿”å›
         while(cur_row<row && cur_row>=0 && cur_column>=0 && cur_column<column && matrix[cur_row][cur_column] <= target )
         {
             if(matrix[cur_row][cur_column] == target)
@@ -43,7 +43,7 @@ bool searchMatrix(vector<vector<int>>& matrix, int target)
         cur_column--;
     }
     return false;
-    // ×î¿ì½â´ğ
+    // æœ€å¿«è§£ç­”
 //         int n=f.size();
 //             if(n==0)
 //                 return false;

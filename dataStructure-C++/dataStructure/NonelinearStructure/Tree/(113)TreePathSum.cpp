@@ -11,7 +11,7 @@ struct TreeNode
 };
 
 /**
- * ÌâÄ¿ÔÚleetcode 113Ìâ¡£
+ * é¢˜ç›®åœ¨leetcode 113é¢˜ã€‚
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
@@ -27,25 +27,25 @@ public:
 	int presum;
 
 	void findPath(TreeNode* t, int &sum, vector<int> &path, int &presum, vector<vector<int>> &result) {
-		// ±ß½çÅÐ¶Ï
+		// è¾¹ç•Œåˆ¤æ–­
 		if (!t) {
 			return;
 		}
 
-		// ÈëÕ»
+		// å…¥æ ˆ
 		path.push_back(t->val);
 		presum += t->val;
 
-		// ÅÐ¶ÏÊÇ·ñÂú×ãÊä³öÌõ¼þ
+		// åˆ¤æ–­æ˜¯å¦æ»¡è¶³è¾“å‡ºæ¡ä»¶
 		if (presum == sum && !t->left && !t->right) {
 			result.push_back(path);
 		}
 
-		// ±éÀú
+		// éåŽ†
 		findPath(t->left, sum, path, presum, result);
 		findPath(t->right, sum, path, presum, result);
 
-		// ³öÕ»
+		// å‡ºæ ˆ
 		presum -= t->val;
 		path.pop_back();
 	}

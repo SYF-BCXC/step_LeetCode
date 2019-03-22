@@ -5,7 +5,7 @@ using namespace std;
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        // // Ã»ÓĞË¼Â·£¬ÏÈÓÃ¸¨Öú¿Õ¼ä,ÓÃmapÏÈÊÔÊÔ,hashÓ¦¸ÃÒ²¿ÉÒÔ
+        // // æ²¡æœ‰æ€è·¯ï¼Œå…ˆç”¨è¾…åŠ©ç©ºé—´,ç”¨mapå…ˆè¯•è¯•,hashåº”è¯¥ä¹Ÿå¯ä»¥
         // map<int,int> m;
         // for(int i = 0;i<nums.size();i++){
         //     if(m.find(nums[i])->second){
@@ -20,7 +20,6 @@ public:
         //     }
         // }
         // return -1;
-        // ÔÙ¿¼ÂÇÒ»ÏÂ²»ÓÃ¸¨Öú¿Õ¼äµÄ·½·¨,a^a=0
         int result = 0;
         for(int i = 0;i<nums.size();i++){
             result^=nums[i];
