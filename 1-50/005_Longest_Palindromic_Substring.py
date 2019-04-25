@@ -19,6 +19,7 @@ https://leetcode-cn.com/problems/longest-palindromic-substring/description/
 关于Manacher算法的补充：
     Manacher算法的思路其实和KMP算法的思路类似，都是利用已经扫描过的对等的字符串的信息，减少匹配次数。其中最精彩的地方在于将任意长度的字符串变成奇数长度(2*N+1一定为奇数)
     参考文献：https://www.cnblogs.com/love-yh/p/7072161.html
+    http://phoenixgs.cn/2017/06/22/manacher-%E7%AE%97%E6%B3%95/
 """
 
 
@@ -54,7 +55,7 @@ class Solution:
         else:
             self.p[i, j] = self.dynamic_programming(s, i + 1, j - 1) and (s[i] == s[j])
 
-    # 动态规划法(暂时未看懂，网上找的代码，如果有看懂的，还请不吝赐教)
+    # 动态规划法
     def longestPalindrome2(self, s):
         str_length = len(s)
         max_length = 0
@@ -127,9 +128,9 @@ class Solution:
             if RL[i] > MaxLen:
                 MaxLen = RL[i]
                 MaxPos = i
-        return s[MaxPos - MaxLen + 1: MaxPos + MaxLen - 1].replace('#', '')  # 去掉填充符号返回
+        return s[MaxPos - MaxLen + 1: MaxPos + MaxLen].replace('#', '')  # 去掉填充符号返回
 
 
 if __name__ == '__main__':
-    str = "aaabaaaa"
-    print(Solution().longestPalindrome4(str))
+    str_test = "abccbadd"
+    print(Solution().longestPalindrome4(str_test))
