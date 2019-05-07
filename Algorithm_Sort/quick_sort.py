@@ -7,7 +7,6 @@
 # @Email   : tangcaiyuan@hust.edu.cn
 # @Software: PyCharm
 
-
 def swap(lst, a, b):
     tmp = lst[a]
     lst[a] = lst[b]
@@ -107,3 +106,98 @@ if __name__ == '__main__':
     print("original:", test)
     quick_sort_nonrecursion(test, 0, len(test) - 1)
     print("Sorted:", test)
+
+
+
+'''
+def partition_2(arr, l, r):
+    """
+    前后指针法。
+    1. 特殊情况判断。
+    2. pre,cur分别对应小于等于的尾、当前扫描到的大于部分的尾
+    3. while cur<len(arr),当前值大于flag,直接cur+=1；否则，pre+=1,swap(cur,pre),cur+=1
+    """
+    if not arr or l >= r:
+        return l
+    pre, cur = l - 1, l
+    flag, floc = arr[l], l
+    while cur <= r:
+        if arr[cur] > flag:
+            cur += 1
+        else:
+            pre += 1
+            arr[pre], arr[cur] = arr[cur], arr[pre]
+            cur += 1
+    arr[floc], arr[pre] = arr[pre], arr[floc]
+    return pre
+
+
+def partition(arr, l, r):
+    """
+    双指针法。1. 特殊条件判断
+    2. 记录左端点值。
+    3. 若l < r，大循环，找到一组不符合的交换(右边先找，左部分带等于)
+    4. 记录r的位置，交换左端点的值
+    :param arr:
+    :param l:
+    :param r:
+    :return:
+    """
+    if l >= r:
+        return l
+    flag, floc = arr[l], l
+    while l < r:
+        while l < r and arr[r] > flag:
+            r -= 1
+        while l < r and arr[l] <= flag:
+            l += 1
+        arr[l], arr[r] = arr[r], arr[l]
+    arr[floc], arr[r] = arr[r], arr[floc]
+    return r
+
+
+def quick_sort_recursion(arr, l, r):
+    """
+    1. 有效边界判断
+    2. 通过partition函数找到标志位的最终位置
+    3. 根据位置，递归左右两部分
+    :param arr:
+    :param l:
+    :param r:
+    :return:
+    """
+    if len(arr) <= 0 or l >= r:
+        return
+    mid = partition(arr, l, r)
+    if mid > l:
+        quick_sort_recursion(arr, l, mid - 1)
+    if mid < r:
+        quick_sort_recursion(arr, mid + 1, r)
+
+
+def quick_sort_nonrecursion(arr, l, r):
+    """
+    1. 特殊情况判断
+    2. 定义递归用的栈，将当前的l和r压入
+    3. 栈不为空，则循环。每次循环弹出当前的l和r，执行partition操作，并根据情况压入
+    :param arr:
+    :param l:
+    :param r:
+    :return:
+    """
+    if not arr or l >= r:
+        return
+    stack = []
+    stack.append(l)
+    stack.append(r)
+    while stack:
+        tr = stack.pop()
+        tl = stack.pop()
+        mid = partition_2(arr, tl, tr)
+        if mid > tl:
+            stack.append(tl)
+            stack.append(mid - 1)
+        if mid < tr:
+            stack.append(mid + 1)
+            stack.append(tr)
+'''
