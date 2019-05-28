@@ -145,6 +145,50 @@ empty();
 
 ### iterator迭代器
 参考容器中的遍历。
+
+## python常用包以及值得注意的细节
+
+```python
+Counter
+    from collections import Counter
+    cc = Counter(arr)	# 也可以直接传字符串，会返回字母的词频
+    # Counter继承自字典，因此和字典的用法类似
+    cc.items()
+    cc.keys()
+    ...
+
+heapq
+    import heapq
+    heapq.heappush(arr,(val,key))	#将(val,key)的元祖加入到arr中，并按照val的大小构建最小堆
+    heaq.heappop(arr)	# 将arr堆中的根弹出(最小元素)
+
+queue
+    import queue
+    q = queue.Queue()
+    q.put()
+    q.get()
+    
+List
+	插入：
+    insert(loc,val)
+    删除：
+    remove(val)
+    pop(loc)
+    排序：
+	sortedArr = sorted(arr,key=lambda x:x**2) 	# 将排序结果放入sortedArr中，Arr结果不变
+    arr.sort()	# 原地排序
+
+set
+	s = set(arr)	# 也可以放string
+    s.add(val)
+    s.update(arr)	# 和add功能一样，这里可以直接放list,dict,tuple
+    s.remove(val)
+    val in s	# val是否在set中
+    
+```
+
+
+
 # 线性结构
 ## 数组
 
