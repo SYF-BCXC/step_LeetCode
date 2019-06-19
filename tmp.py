@@ -1,50 +1,59 @@
-class Solution:
-    def isahead(self, a, b):
-        n, m = len(a), len(b)
-        x, y = 0, 0
-        count = 1
-        while x < n and y < m:
-            if a[x] != b[y]:
-                if count == 1:
-                    if n < m:
-                        x -= 1
-                    else:
-                        y -= 1
-                    count -= 1
-                else:
-                    return False
-            x += 1
-            y += 1
-        return True
+while True:
+    try:
+        s = input()
+        words = list(input().split())
+        n = len(s)
+        if n <= 0 or not words:
+            print(False)
+            continue
+        dp = [False for _ in range(n + 1)]  # dp[i]表示0~i-1的子串满足
+        dp[0] = True
+        for i in range(1, n + 1):
+            ts = s[:i]
+            for j in range(i):
+                if dp[j] and ts[j:] in words:
+                    dp[i] = True
+                    continue
+        print(dp[-1])
+    except:
+        break
 
-    def longestStrChain(self, words):
-        """动态规划
-        1. 原文题：长度为n能组成的最大长度;子问题：长度为n-1 能组成的最大长度
-        2. 状态：dp[i]以i为最长单词能组成的最大词链
-        3. 初始化：长度最小的word为1
-        4. 动态转移方程：dp[i] = max(dp[j])+1,j指长度为k-1且为其前身的单词,k=len(words[i])
-        """
-        mywords = sorted(words, key=lambda x: len(x))
-        n = len(mywords)
-        dp = [1 for _ in range(n)]
-        ans = 1
-        base = len(mywords[0])
-
-        for i in range(n):
-            if len(mywords[i]) == base:
-                dp[i] = 1
-            elif len(mywords[i]) > base:
-                for j in range(i - 1, -1, -1):
-                    if 0 <= j < n and len(mywords[j]) == (len(mywords[i]) - 1) and self.isahead(mywords[i], mywords[j]):
-                        dp[i] = max(dp[j] + 1, dp[i])
-                        ans = max(ans, dp[i])
-                    elif 0 <= j < n and len(mywords[j]) < (len(mywords[i]) - 1):
-                        break
-        return ans
+'''
+def read_data():
+    import numpy as np
+    mnist = np.load("C:/Users/Dawn/Desktop/mnist.npz")
+    X = mnist["X"]
+    return X
 
 
-s = Solution()
-words = ["ksqvsyq", "ks", "kss", "czvh", "zczpzvdhx", "zczpzvh", "zczpzvhx", "zcpzvh", "zczvh", "gr", "grukmj",
-         "ksqvsq", "gruj", "kssq", "ksqsq", "grukkmj", "grukj", "zczpzfvdhx", "gru"]
-print(s.longestStrChain(words))
-print(s.isahead("kss", "czvh"))
+def cando(img):
+    """输入为28*28图片,0代表黑，255代表白"""
+    dx = [1, 1, 0, -1, -1, -1, 0, 1]
+    dy = [0, 1, 1, 1, 0, -1, -1, -1]
+    vis = [[False for _ in range(28)] for _ in range(28)]
+
+    def dp(x, y):
+        vis[x][y] = True
+        for d in range(8):
+            tmpx, tmpy = x + dx[d], y + dy[d]
+            if 0 <= tmpx < 28 and 0 <= tmpy < 28 and vis[tmpx][tmpy] == False and img[tmpx][tmpy] == 255:
+                dp(tmpx, tmpy)
+
+    for i in range(28):
+        for j in range(28):
+            if img[i][j] == 255:
+                dp(i, j)
+                for q in range(28):
+                    for w in range(28):
+                        if vis[q][w] == False and img[q][w] == 255:
+                            return False
+                return True
+
+
+X = read_data()
+ans = 0
+for i in range(len(X)):
+    if cando(X[i]):
+        ans += 1
+print(ans)
+'''
