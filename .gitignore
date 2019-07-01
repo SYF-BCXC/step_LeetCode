@@ -17,3 +17,4 @@ dataStructure-C++/.vscode/tasks.json
 *.xml
 dataStructure-C++/dataStructure-C++.cbp
 dataStructure-C++/dataStructure-C++.layout
+*.bin
