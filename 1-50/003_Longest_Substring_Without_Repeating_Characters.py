@@ -70,3 +70,32 @@ class Solution:
             max_len = sub_len
         return max_len
 """
+
+
+''' 第二次遇到，居然第一感觉是用动态规划
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        """
+        动态规划
+        1、 原问题：长度为n的字符串的最长子串。子问题：长度为i的字符串的最长子串。
+        2、 状态： dp[i] 表示以s[i]结尾的最长子串
+        3、 初始化： dp[i] = s[i]
+        4、 状态转移方程： dp[i] = dp[i-1]+s[i] if s[i] not in dp[i-1] else s[i]
+        """
+        if not s: return 0
+        dp = [s[i] for i in range(len(s))]
+        ans = 1
+        for i in range(1,len(dp)):
+            if s[i] not in dp[i-1]:
+                dp[i] = dp[i-1] + s[i]
+                ans = max(ans, len(dp[i]))
+            else:
+                for j in range(i-1, -1, -1):
+                    if s[j] not in dp[i]:
+                        dp[i] = s[j] + dp[i]
+                    else:
+                        break
+        print(dp)
+        return ans
+    
+'''

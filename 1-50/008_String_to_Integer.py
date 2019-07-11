@@ -45,6 +45,62 @@ chr(65)     #结果为 'A'，类型为str
 """
 
 
+""" 第二次遇到这个题，用的C++版本。 但是，这个题其实题意多读几遍就能发现，开头出现的字符只能是空格、数字、符号，从前往后去掉开头连续的空格，接下来如果是符号，则记录，没有符号直接出现数字则记录数字，直到不为数字的部分。则数字提取结束。
+
+#include <cmath>
+class Solution {
+public:
+    int myAtoi(string str) {
+        string ans;
+        bool once = false;  // 符号只能出现一次
+        bool flag = true; // true -> positive, false -> negative;
+        bool num = false; // 保证数字开头不为0
+        bool valid = false; // 是否已经经历过有效字符
+        
+        for(int i=0; i<str.length(); i++){
+            if (str[i]==' ' && valid == false) continue;
+            else if ((str[i]=='-' || str[i] == '+') && once == false && valid == false){
+                once = true;
+                valid = true;
+                if(str[i] == '-') flag = false;
+            }
+            else if(str[i] >= '0' && str[i] <= '9'){
+                valid = true;
+                if (num == true) ans += str[i];
+                else{
+                    if(str[i] >= '1' && str[i] <= '9') {
+                        num = true;
+                        ans += str[i];
+                    }
+                }
+            }
+            else{
+                break;
+            }
+        }
+        
+        if(ans.length() > 10){
+            if (flag == false) return INT_MIN; else return INT_MAX;
+        }
+        
+        long long decimal = 1;
+        long long res = 0;
+        
+        for (int i=ans.length()-1; i>=0; i--){
+            res = res + (decimal * (long long)(ans[i]-'0'));
+            decimal = decimal * 10;
+        }
+        if (flag == false) res = -res;
+        if (res > INT_MAX) return INT_MAX;
+        if (res < INT_MIN) return INT_MIN;
+        return (int)res;
+    }
+};
+    
+
+"""
+
+
 class Solution:
     # 此方法放弃，这个方法当遇到"-    123"时，应该输出0，但是会输出123。
     # 主要问题在于奇葩的情况太多，应该换种思路，直接把第一段数字先抠出来，如果前面不是"多个空格一个符号"的形式就返回0，可以减少大量判断的代码
