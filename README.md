@@ -175,10 +175,19 @@ Counter
     cc.keys()
     ...
 
+OrderedDict(记录插入顺序的字典)
+	from collections import OrderedDict
+    cc = OrderedDict()
+    
+
 heapq
     import heapq
     heapq.heappush(arr,(val,key))	#将(val,key)的元祖加入到arr中，并按照val的大小构建最小堆
     heaq.heappop(arr)	# 将arr堆中的根弹出(最小元素)
+    
+    lyst = [-3, 22, 45, 34, 99, 102, -44]
+    low3 = heapq.nlargest(3, lyst)	# 直接获取Top3
+    top3 = heapq.nsmallest(3, lyst)	# 直接获取最后三名
 
 queue
     import queue
