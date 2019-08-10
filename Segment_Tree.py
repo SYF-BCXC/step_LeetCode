@@ -9,6 +9,7 @@
 
 """
 自构线段树，完成update和query操作
+https://www.bilibili.com/video/av47331849?from=search&seid=7648575135614905166
 """
 
 class MySegmentTree:
@@ -20,7 +21,9 @@ class MySegmentTree:
         self.buildTree(0, 0, len(arr) - 1)
 
     def buildTree(self, node, start, end):
-        """构造线段树"""
+        """构造线段树
+        build_arr中每个值都代表了一个段落的和
+        """
         if start == end:
             self.build_arr[node] = self.original_arr[start]
             return

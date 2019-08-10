@@ -1,59 +1,164 @@
-while True:
-    try:
-        s = input()
-        words = list(input().split())
-        n = len(s)
-        if n <= 0 or not words:
-            print(False)
-            continue
-        dp = [False for _ in range(n + 1)]  # dp[i]表示0~i-1的子串满足
-        dp[0] = True
-        for i in range(1, n + 1):
-            ts = s[:i]
-            for j in range(i):
-                if dp[j] and ts[j:] in words:
-                    dp[i] = True
-                    continue
-        print(dp[-1])
-    except:
-        break
+def flowerNum(num):
+	pre = num
+	all = 0
+	while num!=0:
+		all += ((num % 10)**3)
+		num = num // 10
+	if all == pre:
+		return True
+	else:
+		return False
+
+a, b = map(int, input().split())
+time = 0
+for i in range(a,b+1):
+	if flowerNum(i):
+		time += 1
+		print(i, end=' ')
+if time == 0:
+	print('no')
+else:
+	print()
 
 '''
-def read_data():
-    import numpy as np
-    mnist = np.load("C:/Users/Dawn/Desktop/mnist.npz")
-    X = mnist["X"]
-    return X
+# 又中间值确认，如例中的5/3,大于3/2小于2/1,此时求中则为所求
+# 需要中间值求几次就是第几行
+
+class node:
+    def __init__(self, x, y):
+        self.a = x
+        self.b = y
+
+    def getVal(self):
+        if self.b == 0:
+            return 0x7fffffff
+        return self.a / self.b
+
+    def getA(self):
+        return self.a
+
+    def getB(self):
+        return self.b
 
 
-def cando(img):
-    """输入为28*28图片,0代表黑，255代表白"""
-    dx = [1, 1, 0, -1, -1, -1, 0, 1]
-    dy = [0, 1, 1, 1, 0, -1, -1, -1]
-    vis = [[False for _ in range(28)] for _ in range(28)]
-
-    def dp(x, y):
-        vis[x][y] = True
-        for d in range(8):
-            tmpx, tmpy = x + dx[d], y + dy[d]
-            if 0 <= tmpx < 28 and 0 <= tmpy < 28 and vis[tmpx][tmpy] == False and img[tmpx][tmpy] == 255:
-                dp(tmpx, tmpy)
-
-    for i in range(28):
-        for j in range(28):
-            if img[i][j] == 255:
-                dp(i, j)
-                for q in range(28):
-                    for w in range(28):
-                        if vis[q][w] == False and img[q][w] == 255:
-                            return False
-                return True
+def getMid(n1, n2):
+    tmpa, tmpb = (n1.getA() + n2.getA()), (n1.getB() + n2.getB())
+    tmp = node(tmpa, tmpb)
+    return tmp
 
 
-X = read_data()
-ans = 0
-for i in range(len(X)):
-    if cando(X[i]):
-        ans += 1
-print(ans)
+def isEqual(n1, n2):
+    if n1.b == n2.b == 0 and n1.a == n2.a:
+        return True
+    else:
+        if n1.a / n1.b == n2.a / n2.b:
+            return True
+        else:
+            return False
+
+
+left = node(0, 1)
+right = node(1, 0)
+
+tmpa, tmpb = input().split()
+tmpa = int(tmpa)
+tmpb = int(tmpb)
+target = node(tmpa, tmpb)
+
+mid = left
+level = 0
+track = ""
+
+while not isEqual(mid, target):
+    mid = getMid(left, right)
+    level += 1
+    if mid.getVal() > target.getVal():
+        track += "0"
+        right = mid
+    else:
+        track += "1"
+        left = mid
+
+ansa = level
+tmp = track[:-1]
+ansb = 0
+if tmp == "":
+    ansb = 1
+else:
+    ansb = int(tmp, 2) + 1
+print(ansa,end=" ")
+print(ansb)
+'''
+
+"""class Solution:
+    def __init__(self):
+        self.ans = False
+
+    def solution(self, arr, item):
+        if len(arr) == 1:
+            if not item:
+                if arr[0][0] == arr[0][-1]:
+                    self.ans = True
+            else:
+                if item[0][0] == arr[0][-1] and item[-1][-1] == arr[0][0]:
+                    self.ans = True
+            return
+        for i in range(len(arr)):
+            if arr[i][0] == item[-1][-1]:
+                self.solution(arr[0:i] + arr[i + 1:], item + [arr[i]])
+
+    def p(self):
+        if self.ans:
+            print('true')
+        else:
+            print('false')
+
+
+if __name__ == '__main__':
+    s = Solution()
+    words = list(input().split())
+    if len(words) == 1:
+        if words[0][0] == words[0][-1]:
+            print('true')
+        else:
+            print('false')
+    elif len(words) == 0:
+        print('true')
+    else:
+        s.solution(words[:-1], [words[-1]])
+        s.p()
+"""
+'''
+# 不满足的数据，一定是同时大于两边或者同时小于两边
+while True:
+    try:
+        A = [-10000000] + list(map(int, list(input().split())))
+        A.append(10000000)
+        B = list(map(int, list(input().split())))
+        count = 0
+        flag = False
+        question = False
+        if len(A) <= 3:
+            for k in range(1, len(A) - 1):
+                print(A[k], end=' ')
+            print()
+        else:
+            for i in range(1, len(A) - 1):
+                if (A[i] < A[i + 1] and A[i] < A[i - 1]) or (A[i] > A[i - 1] and A[i] > A[i + 1]):
+                    question = True
+                    for j in range(len(B)):
+                        if A[i - 1] < B[j] < A[i + 1]:
+                            A[i] = max(B[j], A[i])
+                            flag = True
+                    if flag:
+                        count += 1
+                        flag = False
+            if count > 1 or (count == 0 and question == True):
+                print("NO")
+            else:
+                for k in range(1, len(A) - 1):
+                    print(A[k], end=' ')
+                print()
+    except:
+        break
 '''

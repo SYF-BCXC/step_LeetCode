@@ -47,9 +47,6 @@ public:
 
 
 
-
-
-
 class Solution:
     def lastStoneWeightII(self, stones: List[int]) -> int:
         """本质是每个数配一个正负号的问题，总共有2^n种情况

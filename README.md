@@ -162,11 +162,53 @@ q.pop();
 #### multiset多重集合
 
 ### iterator迭代器
+
 参考容器中的遍历。
+
+```c++
+// 每个容器都有实现begin()和end(),其中end()为最后一个元素的下一位置。
+// 常用操作
+/*	题外话: "->" 和 "." 的区别，前者用于指针，后者用于对象本身 
+*iterator 解引用
+iter->men 解引用等价于 (*iterator).men
+iter++, iter--, iter1 == iter2
+*/
+// 此外还有const_iterator，只能读不能写
+```
+
+
 
 ## python常用包以及值得注意的细节
 
 ```python
+bisect(二分查找与插入)
+	import bisect
+    import random
+    random.seed(1)
+    l = []
+    for i in range(1, 15):
+        r = random.randint(1, 100)
+        position = bisect.bisect(l, r)	# The returned insertion point i partitions the array a into two halves so that all(val <= x for val in a[lo:i]) for the left side and all(val > x for val in a[i:hi]) for the right side. 因此对于列表同样适用，[1,3] < [1,5], [1,1]>[1].
+        bisect.insort(l, r)
+        print'%3d  %3d' % (r, position), l
+        
+New  Pos Contents
+---  --- --------
+ 14    0 [14]
+ 85    1 [14, 85]
+ 77    1 [14, 77, 85]
+ 26    1 [14, 26, 77, 85]
+ 50    2 [14, 26, 50, 77, 85]
+ 45    2 [14, 26, 45, 50, 77, 85]
+ 66    4 [14, 26, 45, 50, 66, 77, 85]
+ 79    6 [14, 26, 45, 50, 66, 77, 79, 85]
+ 10    0 [10, 14, 26, 45, 50, 66, 77, 79, 85]
+  3    0 [3, 10, 14, 26, 45, 50, 66, 77, 79, 85]
+ 84    9 [3, 10, 14, 26, 45, 50, 66, 77, 79, 84, 85]
+ 44    4 [3, 10, 14, 26, 44, 45, 50, 66, 77, 79, 84, 85]
+ 77    9 [3, 10, 14, 26, 44, 45, 50, 66, 77, 77, 79, 84, 85]
+  1    0 [1, 3, 10, 14, 26, 44, 45, 50, 66, 77, 77, 79, 84, 85]
+
 Counter
     from collections import Counter
     cc = Counter(arr)	# 也可以直接传字符串，会返回字母的词频
