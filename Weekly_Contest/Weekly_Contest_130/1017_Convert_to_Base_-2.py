@@ -6,6 +6,26 @@
 # @Time    : 2019/4/24 16:28
 # @Email   : tangcaiyuan@hust.edu.cn
 # @Software: PyCharm
+
+"""
+其实更重要是让余数为正即可(手算两个数即可)。
+class Solution:
+    def baseNeg2(self, N: int) -> str:
+        if N == 0:
+            return '0'
+        ans = ''
+        while N != 0:
+            d = N % (-2)
+            N = N // -2
+            if d < 0:
+                d += 2
+                N += 1
+            ans = str(d) + ans
+        return ans
+"""
+
+
+
 import math
 
 def baseNeg2(N):

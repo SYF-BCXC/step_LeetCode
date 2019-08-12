@@ -181,6 +181,35 @@ iter++, iter--, iter1 == iter2
 ## python常用包以及值得注意的细节
 
 ```python
+"""
+python数据类型：
+Numbers{int,long,float,complex;小整数对象池[-5,257)，统一存放，改变则复制改变}、String、List、Tuple、Dictionary
+"""
+
+itertools(遍历神器)
+	import itertools
+    """和Counter一样方便。若不这么做代码可能会是:
+    	count = []
+    	k = [text[0], 0]
+        for i in range(len(text)):
+            if text[i] == k[0]:
+                k[1] += 1
+            else:
+                count.append(k.copy())
+                k[0] = text[i]
+                k[1] = 1
+        count.append(k.copy())
+    """
+    a = 'aaabbc'
+    s = [[c,''.join(g)] for c,g in itertools.groupby(a)]  # [['a', 'aaa'], ['b', 'bb'], ['c', 'c']]
+    k = [[c,len(list(g))] for c,g in itertools.groupby(a)] # [['a', 3], ['b', 2], ['c', 1]]
+    
+    """还可以做笛卡尔积，全排列和组合
+    https://docs.python.org/3.6/library/itertools.html?highlight=itertools"""
+    product('ABCD', repeat=2) # AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD
+    permutations('ABCD', 2)	# AB AC AD BA BC BD CA CB CD DA DB DC
+    combinations('ABCD', 2)# AB AC AD BC BD CD
+
 bisect(二分查找与插入)
 	import bisect
     import random
@@ -188,7 +217,7 @@ bisect(二分查找与插入)
     l = []
     for i in range(1, 15):
         r = random.randint(1, 100)
-        position = bisect.bisect(l, r)	# The returned insertion point i partitions the array a into two halves so that all(val <= x for val in a[lo:i]) for the left side and all(val > x for val in a[i:hi]) for the right side. 因此对于列表同样适用，[1,3] < [1,5], [1,1]>[1].
+        position = bisect.bisect(l, r)	# 等同于bisect_right. The returned insertion point i partitions the array a into two halves so that all(val <= x for val in a[lo:i]) for the left side and all(val > x for val in a[i:hi]) for the right side. 因此对于列表同样适用，[1,3] < [1,5], [1,1]>[1].bisect_left则在相同值时返回最左。
         bisect.insort(l, r)
         print'%3d  %3d' % (r, position), l
         
@@ -217,6 +246,9 @@ Counter
     cc.keys()
     ...
 
+collections.defaultdict(k)
+	# 其中k可以填int, list等等，表明value的值是一个默认类型。
+    
 OrderedDict(记录插入顺序的字典)
 	from collections import OrderedDict
     cc = OrderedDict()
